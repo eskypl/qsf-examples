@@ -11,7 +11,7 @@ Any technical questions or suggestions should be posted as issues on GitHub.
 This repository provides both, an working example of QSF and a developer guide
 which describes in details, how QSF is constructed.
 
-Examples are located in [examples](./examples) folder which contains index off
+Examples are located in [docs](./docs) folder which contains index off
 all possible QSFs. Each QSF has its own developer guide.
 
 > Guide and example are focused only on technical aspects of building QSF. Any

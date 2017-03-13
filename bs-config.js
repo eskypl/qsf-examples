@@ -1,6 +1,6 @@
 module.exports = {
     "files": [
-        "examples"
+        "docs"
     ],
     "watchOptions": {
         "ignoreInitial": true,
@@ -8,6 +8,6 @@ module.exports = {
     },
     "server": true,
     "serveStatic": [
-        "examples"
+        "docs"
     ]
 };
