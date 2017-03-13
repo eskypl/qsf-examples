@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>QSF examples</title>
+    <meta name="theme-color" content="#031639">
+    <link href="https://static1.eskypartners.com/favicons/esky.ico" rel="shortcut icon">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" rel="stylesheet">
+    <link href="./styles/index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,7 +15,7 @@
     <div class="container">
         <div class="nav-left">
             <a class="nav-item" href="./">
-                QSF examples
+                <strong>QSF examples</strong>
             </a>
             <a class="nav-item is-tab is-active" href="./">Home</a>
             <a class="nav-item is-tab" href="./flights">Flights</a>
@@ -27,6 +29,10 @@
             <h1 class="title">
                 QSF examples
             </h1>
+            <p class="subtitle">
+                A guide designed for website owners who became eSky.pl affiliates and want to implement eSky's QSF (Quick Search Form).
+                This guide will introduce to you basic concepts required to correctly implement QSF.
+            </p>
         </div>
     </div>
 </div>
@@ -34,12 +40,22 @@
 <section class="section">
     <div class="container">
         <div class="content">
+            <h3 class="title is-3">General information</h3>
+            <p>
+                This page contains various examples of QSFs used by eSky.pl services. You can explore those examples
+                in many ways, from just browsing to cloning or forking repository. You can also use them on your own
+                webpage, however remember that code in this repository is provided as is, without any warranty or support.
+            </p>
+            <p class="notification is-info">
+                Guide and examples are focused only on technical aspects of building QSF. Any
+                design & usability topics are not covered here.
+            </p>
             <h3 class="title is-3">Flights</h3>
             <ul>
+                <li><a href="https://github.com/eskypl/qsf-examples/blob/master/docs/flights/README.md">Documentation</a> - basic knowledge how to assemble QSF for flights service.</li>
                 <li><a href="./flights">Basic example</a> - contains only valid HTML markup with JavaScript required for interaction with Trip type controls.</li>
             </ul>
         </div>
-
     </div>
 </section>
 

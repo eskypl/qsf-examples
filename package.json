@@ -1,5 +1,5 @@
 {
-  "name": "qsf-example",
+  "name": "qsf-examples",
   "version": "1.0.0",
   "description": "Example of QSF used to make search on esky.pl",
   "repository": {
@@ -12,6 +12,8 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "browser-sync": "^2.18.8"
+    "browser-sync": "^2.18.8",
+    "bulma": "^0.3.2",
+    "node-sass": "^4.5.0"
   }
 }

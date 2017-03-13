@@ -1,0 +1,90 @@
+// fonts
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Ubuntu:400,700');
+
+// primary
+$dark-blue: #002172;
+$blue: #0775e2;
+$cyan: #00d2e8;
+$magenta: #e2076a;
+
+// secondary
+$red: #a03837;
+$orange: #e0760b;
+$green: #126616;
+
+// grays
+$gray-xxl: #1c2b39;
+$gray-xl: #505c75;
+$gray-l: #969dac;
+$gray-m: #dcdee3;
+$gray-s: #eaebee;
+$gray-xs: #f6f7f8;
+$white: #ffffff;
+
+// bulma
+$primary: $dark-blue;
+$info: $cyan;
+$success: $green;
+$warning: $orange;
+$danger: $red;
+$background: $gray-xxl;
+$link: $dark-blue;
+
+$family-primary: 'Noto Sans', sans-serif;
+
+@import "../../node_modules/bulma/bulma.sass";
+
+// customized
+fieldset {
+  border: 0;
+}
+
+legend {
+  display: none;
+}
+
+a:hover {
+  color: $blue;
+}
+
+footer {
+  * {
+    color: #dcdee3;
+  }
+  a {
+    color: $cyan;
+  }
+}
+
+.title,
+.subtitle {
+  font-family: 'Ubuntu', $family-primary;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.subtitle {
+  font-weight: 400;
+}
+
+.input,
+.textarea {
+  box-shadow: none;
+}
+
+.qsf {
+  background: $gray-s;
+  padding: 2rem;
+}
+
+.trip-type {
+  border-bottom: 1px solid $gray-m;
+  margin-bottom: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.hidden {
+  display: none !important;
+}

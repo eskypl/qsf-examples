@@ -4,6 +4,7 @@ module.exports = {
     ],
     "watchOptions": {
         "ignoreInitial": true,
+        "ignored": 'styles/**/*.{scss,map}',
         "usePolling": true
     },
     "server": true,

@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>QSF examples - Flights</title>
+    <meta name="theme-color" content="#031639">
+    <link href="https://static1.eskypartners.com/favicons/esky.ico" rel="shortcut icon">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" rel="stylesheet">
+    <link href="../styles/index.css" rel="stylesheet">
 </head>
 <body>
 
@@ -12,7 +15,7 @@
     <div class="container">
         <div class="nav-left">
             <a class="nav-item" href="../">
-                QSF examples
+                <strong>QSF examples</strong>
             </a>
             <a class="nav-item is-tab" href="../">Home</a>
             <a class="nav-item is-tab is-active" href="./flights">Flights</a>
@@ -35,18 +38,23 @@
 
 <section class="section">
     <div class="container">
-        <style scoped>
-            fieldset { border: 0; }
-            legend { display: none; }
-
-            .input, .textarea { box-shadow: none; }
-            .qsf { background: #f7f7f7; padding: 2rem; }
-            .trip-type { border-bottom: 1px solid #ddd; margin-bottom: 1rem !important; padding-bottom: 1rem !important; }
-            .hidden { display: none !important; }
-        </style>
         <div class="content">
-            <p>Basic example contains only valid HTML markup with JavaScript required for interaction with <strong>Trip type</strong> controls.</p>
-        </div>
+            <h3>Information</h3>
+            <p class="notification is-info">
+                For source code and full documentation how to assemble valid QSF for flights service, please check
+                <a href="https://github.com/eskypl/qsf-examples/blob/master/docs/flights/README.md">README.md</a> in
+                <a href="https://github.com/eskypl/qsf-examples">GitHub repository</a>.
+            </p>
+            <p>
+                This example contains only valid HTML markup with JavaScript required for interaction with <strong>Trip type</strong> controls.
+                Full implementation should always include:
+            </p>
+            <ol>
+                <li>Cities and airports auto-complete.</li>
+                <li>Date-pickers for data fields.</li>
+                <li>Full form validation.</li>
+            </ol>
+        </p>
         <form method="get" action="https://www2.esky.pl/flights/select" id="flights-qsf" target="_blank" class="qsf container">
             <div class="columns is-multiline is-gapless">
                 <fieldset class="column is-12 trip-type">
