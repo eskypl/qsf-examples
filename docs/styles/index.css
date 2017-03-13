@@ -4043,6 +4043,9 @@ footer * {
 footer a {
   color: #00d2e8; }
 
+.hero-body {
+  background-image: url("https://cdnstatic1.eskypartners.com/okazje_hero/spring2.jpg"); }
+
 .title,
 .subtitle {
   font-family: "Ubuntu", "Noto Sans", sans-serif; }

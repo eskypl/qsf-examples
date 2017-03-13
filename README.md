@@ -1,4 +1,4 @@
-# QSF developer guide
+# QSF examples
 
 This guide is designed for website owners who became eSky.pl affiliates and
 want to implement eSky's QSF (Quick Search Form). This guide will introduce to you
