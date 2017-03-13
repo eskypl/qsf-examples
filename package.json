@@ -1,0 +1,17 @@
+{
+  "name": "qsf-example",
+  "version": "1.0.0",
+  "description": "Example of QSF used to make search on esky.pl",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eskypl/qsf-examples.git"
+  },
+  "scripts": {
+    "start": "browser-sync start --config bs-config.js --no-open"
+  },
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "browser-sync": "^2.18.8"
+  }
+}
