@@ -1,0 +1,14 @@
+extends /templates/main
+
+block sidebar
+    include /templates/sidebar/flights
+
+block content
+    .content.markdown
+        include:markdown-it(html=true) locked-departure-example.md
+    .content
+        include ../../examples/flights/basic-qsf.html
+
+        h3 JavaScrip code
+        pre: code.language-javascript
+            include ../../examples/flights/basic-qsf.js
