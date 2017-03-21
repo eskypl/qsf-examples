@@ -1,0 +1,218 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>eSky | QSF examples</title><link href="https://static1.eskypartners.com/favicons/esky.ico" rel="shortcut icon"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/github.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet"><link href="https://eskypl.github.io/qsf-examples/assets/styles/index.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script></head><body><nav class="nav has-shadow"><div class="container"><div class="nav-left"><a class="nav-item logo" href="https://eskypl.github.io/qsf-examples/"><img src="https://eskypl.github.io/qsf-examples/assets/images/logo.png"><span class="spacer">|</span>QSF examples</a><a class="nav-item is-tab" href="https://eskypl.github.io/qsf-examples/">Home</a><a class="nav-item is-tab is-active" href="https://eskypl.github.io/qsf-examples/flights/index.html">Flights</a><a class="nav-item is-tab" href="https://eskypl.github.io/qsf-examples/faq.html">FAQ</a></div><div class="nav-right"><a class="nav-item" href="https://github.com/eskypl/qsf-examples"><img src="https://img.shields.io/github/watchers/eskypl/qsf-examples.svg?style=social&amp;label=Watch"></a></div></div></nav><div class="hero is-primary"><div class="hero-body"><div class="container"><h1 class="title">QSF examples</h1><p class="subtitle">A guide designed for website owners who became eSky.pl affiliates and want to implement eSky's QSF (Quick Search Form).
+This guide will introduce to you basic concepts required to correctly implement QSF.</p></div></div></div><section class="section"><div class="container"><div class="columns"><aside class="column is-3 menu"><p class="menu-label">Documentation</p><ul class="menu-list"><li><a href="./index.html">QSF developer guide</a></li><li><ul class="menu-list"><li><a href="./index.html#required-fields">Required fields</a></li><li><a href="./index.html#form-submission">Form submission</a></li><li><a href="./index.html#code-example">Code example</a></li></ul></li><li><a href="./advanced.html">Advanced topics</a></li><li><ul class="menu-list"><li><a href="./advanced.html#autocomplete">Autocomplete</a></li><li><a href="./advanced.html#date-pickers">Date pickers</a></li><li><a href="./advanced.html#validation">Validation</a></li></ul></li></ul><p class="menu-label">Examples</p><ul class="menu-list"><li><a href="./basic-example.html">Basic</a></li><!--li: a(href='./multi-city-example.html') Multi-city--><!--li: a(href='./locked-departure-example.html') Locked departure--></ul></aside><div class="column"><div class="content markdown"><h1>Flights QSF advanced topics</h1>
+<p>Complete QSF should provide reach and intuitive experience. This can be archived by
+providing additional functionality. This includes autocomplete (or auto-suggestion)
+used in city/airport fields and date pickers (calendars) in fields requiring data input.
+In the end, regardless of provided easing functionality, all fields of the QSF should
+be validated.</p>
+<blockquote>
+<p>Code provided in this documentation uses
+<a href="https://jqueryui.com/autocomplete/">Autocomplete</a> and
+<a href="https://jqueryui.com/datepicker/">Datepicker</a> widgets form
+<a href="https://jqueryui.com">jQuery User Interface</a> library.</p>
+</blockquote>
+<h2><a name="autocomplete"></a> Autocomplete</h2>
+<p>Autocomplete is a functionality with provides user suggestions using user's current
+input. It works like Google search field, where when you type, search engine tries
+to suggest the best answer matching your query, and displays it as a list under the
+input field.</p>
+<p>Having autocomplete for QSF is important from few reasons:</p>
+<ul>
+<li>Users tend to miss-spell cities or airports names.</li>
+<li>Users may not be aware of additional airports near requested destination.</li>
+<li>It allows user to configure search for all airport in the city or choose
+only specific one.</li>
+</ul>
+<p>The aim of autocomplete is to present user a wide offer and limit number of
+errors during early phase of search.</p>
+<p>Autocomplete for flights QSF consists of two parts: RESTful web service and client script.</p>
+<h3>RESTful web service</h3>
+<p>This service is provided by eSky. Depending on market there are two URLs which expose this
+service to customers.</p>
+<table>
+<thead>
+<tr>
+<th>Market</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EU</td>
+<td>https://autocomplete.eskyservices.pl</td>
+</tr>
+<tr>
+<td>LATAM</td>
+<td>https://autocomplete.edestinos.com</td>
+</tr>
+</tbody>
+</table>
+<p>This URL accepts GET queries, where all parameter should ba added as a <a href="https://en.wikipedia.org/wiki/Query_string">query string</a>,
+which should consist from the following fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field name</th>
+<th>Example value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>lon</td>
+<td>User input with minimum 3 characters.</td>
+</tr>
+<tr>
+<td>locale</td>
+<td>ro_RO</td>
+<td>Language of returned content. If content have no translation language defaults to english.</td>
+</tr>
+</tbody>
+</table>
+<p>Example request with cURL:</p>
+<pre><code>curl -X POST &quot;https://autocomplete.eskyservices.pl/?query=lon&amp;locale=ro_RO&quot;
+</code></pre>
+<p>Response example (partial):</p>
+<pre><code class="language-json">{
+  &quot;result&quot;: [
+    {
+      &quot;_index&quot;: &quot;multiports&quot;,
+      &quot;_type&quot;: &quot;multiport&quot;,
+      &quot;_id&quot;: &quot;lon_ro_RO&quot;,
+      &quot;_score&quot;: 111.33901,
+      &quot;_source&quot;: {
+        &quot;name&quot;: &quot;Londra - Toate Aeroporturile&quot;,
+        &quot;code&quot;: &quot;LON&quot;,
+        &quot;locale&quot;: &quot;ro_RO&quot;,
+        &quot;countryCode&quot;: &quot;gb&quot;,
+        &quot;countryName&quot;: &quot;Marea Britanie&quot;,
+        &quot;cityCode&quot;: &quot;lon&quot;,
+        &quot;cityName&quot;: &quot;Londra&quot;,
+        &quot;popularity&quot;: 1000,
+        &quot;search&quot;: &quot;Londra Anglia Marea Britanie LON&quot;,
+        &quot;suggestion&quot;: &quot;Londra - Toate Aeroporturile, Anglia, Marea Britanie (LON)&quot;,
+        &quot;short_suggestion&quot;: &quot;Londra - Toate Aeroporturile (LON)&quot;,
+        &quot;multiport_suggestion&quot;: &quot;Londra, Marea Britanie&quot;,
+        &quot;suggestionWithTags&quot;: &quot;&lt;b&gt;Lon&lt;/b&gt;dra - Toate Aeroporturile, Anglia, Marea Britanie (&lt;b&gt;LON&lt;/b&gt;)&quot;,
+        &quot;shortSuggestionWithTags&quot;: &quot;&lt;b&gt;Lon&lt;/b&gt;dra - Toate Aeroporturile (&lt;b&gt;LON&lt;/b&gt;)&quot;,
+        &quot;multiportSuggestionWithTags&quot;: &quot;&lt;b&gt;Lon&lt;/b&gt;dra, Marea Britanie&quot;,
+        &quot;airports_data&quot;: [
+          {
+            &quot;_index&quot;: &quot;airports&quot;,
+            &quot;_type&quot;: &quot;airport&quot;,
+            &quot;_id&quot;: &quot;stn_ro_RO&quot;,
+            &quot;_score&quot;: 1.3685826,
+            &quot;_source&quot;: {
+              &quot;name&quot;: &quot;Stansted&quot;,
+              &quot;code&quot;: &quot;STN&quot;,
+              &quot;locale&quot;: &quot;ro_RO&quot;,
+              &quot;countryCode&quot;: &quot;gb&quot;,
+              &quot;countryName&quot;: &quot;Marea Britanie&quot;,
+              &quot;cityCode&quot;: &quot;LON&quot;,
+              &quot;cityName&quot;: &quot;Londra&quot;,
+              &quot;popularity&quot;: 639,
+              &quot;search&quot;: &quot;Stansted Londra Anglia Marea Britanie STN&quot;,
+              &quot;suggestion&quot;: &quot;Londra, Stansted, Anglia, Marea Britanie (STN)&quot;,
+              &quot;short_suggestion&quot;: &quot;Stansted (STN)&quot;,
+              &quot;multiports&quot;: [
+                &quot;lon&quot;
+              ],
+              &quot;location&quot;: {
+                &quot;lat&quot;: 51.885,
+                &quot;lon&quot;: 0.235
+              },
+              &quot;suggestionWithTags&quot;: &quot;&lt;b&gt;Lon&lt;/b&gt;dra, Stansted, Anglia, Marea Britanie (STN)&quot;,
+              &quot;shortSuggestionWithTags&quot;: &quot;Stansted (STN)&quot;
+            },
+            &quot;_processed&quot;: true
+          },
+          ...
+        ]
+      }
+    },
+    ...
+  ]
+}
+
+</code></pre>
+<p>Response is provided in JSON format and can be used to construct suggestion list.</p>
+<h3>Client script</h3>
+<p>Client script is used to utilize RESTful web service. It should fetch data, eventually
+process it and finally display to the user. It should also provide additional functionality
+to navigate through the suggestion list.</p>
+<p>In our case we will use ready <a href="https://jqueryui.com/autocomplete/">Autocomplete</a>
+widget from <a href="https://jqueryui.com">jQuery UI</a> library. Below you can see the most
+basic implementation.</p>
+<pre><code class="language-js">$('[name$=&quot;[a]&quot;],[name$=&quot;[d]&quot;]').autocomplete({
+    minLength: 3,
+    source: function (request, response) {
+        $.get('https://autocomplete.eskyservices.pl?query=' + request.term + '&amp;locale=en_GB')
+            .then(function (data) {
+                return data &amp;&amp; data.result.map(function (entry) {
+                    return entry._source.suggestion;
+                })
+            })
+            .then(response);
+    }
+});
+</code></pre>
+<p>We are applying <code>autocomplete</code> widget to all <code>[name$=&quot;[a]&quot;],[name$=&quot;[d]&quot;]</code> elements,
+that is all departure and arrival destination fields. We are setting two options.
+<code>minLength: 3</code> tells widget to trigger suggestions when user enters at least 3 characters
+(this is required by RESTful web service). To <code>source</code> we are passing a callback
+function which will trigger GET request to web service, take the result and map it
+to retrieve only <code>_source.suggestion</code> property from each matching result, and then pass
+those values to <code>response</code>, which will display suggestions.</p>
+<p>This simple example can be improved by:</p>
+<ul>
+<li>Using <code>suggestionWithTags</code>, which can highlight text fragments matching user input.</li>
+<li>Grouping airports from one city under multiport entry.</li>
+</ul>
+<p>For more information please refer to the <a href="https://api.jquery.com/jquery.get/"><code>jQuery.get</code></a>
+and jQuery UI <a href="http://api.jqueryui.com/autocomplete/">Autocomplete Widget</a> documentation.</p>
+<h2><a name="date-pickers"></a> Date pickers</h2>
+<blockquote>
+<p><strong>Note on HTML5 <code>[type=date]</code> inputs.</strong> Although there is new input type in HTML5 which
+supports date and time input using native widget, we discourage you to use it, as it does
+not provide and easy way to set required by eSky date format.</p>
+</blockquote>
+<p>Providing date picker is not mandatory, however it boosts user experience and secures
+input from invalid data. The basic implementation of data picker, using jQuery UI widget
+may look as follows:</p>
+<pre><code class="language-js">$('[name$=&quot;[dd]&quot;]').datepicker({
+    dateFormat: 'yy-mm-dd'
+});
+</code></pre>
+<p>We are applying <code>datepicker</code> widget to all departure date fields: <code>[name$=&quot;[dd]&quot;]</code>.
+The only option we are passing is <code>dateFormat</code> which enforces ISO format required
+by eSky.</p>
+<h2><a name="validation"></a> Validation</h2>
+<blockquote>
+<p><strong>Why validation on client side is important?</strong> When you omit client side validation
+(that is validation in QSF), eSky will provide validation on server side and capture
+all incorrect requests before displaying results. However this is unwanted situation
+because client is expecting feedback as soon as possible, otherwise he fills additional
+correct forms, which takes times, lowers immersion and general user experience.</p>
+</blockquote>
+<p>Validation is a process of checking if data provided by customer is logically valid.
+We cannot say if for example chosen route from A to B is valid unless we commit
+a search, however we can say if A or B are proper destination names. What else can
+(and should) be validated on QSF:</p>
+<ol>
+<li>If all required fields has some value entered.</li>
+<li>If departure destination is different then arrival destination in the same leg (obviously
+you cannot by flight for example from London to London).</li>
+<li>If date has valid ISO format. Potential error can be also mitigated by disabling
+date inputs and allow to modify their values only by date picker. However this solution
+has its drawbacks and should be re-considered from UX perspective.</li>
+<li>If departure date of subsequent legs are not overlapping (when you select at least round trip
+flight, you have to make sure that date of arrival is at least the same date as date
+of departure).</li>
+<li>Number of passengers is maximum 9. When infant was selected then for one infant
+there must be at least one adult. Travels where there is more then 9 passengers
+are considered group travels and cannot be ordered by online search.</li>
+</ol>
+<p>How you conduct validation and present potential errors to the customer is up to you.</p>
+</div></div></div></div></section><footer class="footer"><div class="container"><div class="content has-text-centered"><p><strong>QSF examples</strong> by <a href="http://it.esky.pl">eSky.pl S.A.</a>.
+The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p><p><a class="icon" href="https://github.com/eskypl/qsf-examples"><i class="fa fa-github"></i></a></p></div></div></footer><script>hljs.initHighlightingOnLoad();</script></body></html>
