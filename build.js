@@ -7,8 +7,8 @@ const sass = require('node-sass');
 const OUTPUT_DIR = path.resolve(__dirname, 'docs');
 const PAGES_DIR_NAME = 'pages';
 const EXAMPLES_DIR_NAME = 'examples';
-const BASE = 'http://localhost:3000';
-// const BASE = 'https://eskypl.github.io/qsf-examples/';
+// const BASE = 'http://localhost:3000';
+const BASE = 'https://eskypl.github.io/qsf-examples/';
 const PATH_FILTER = new RegExp(`^(${PAGES_DIR_NAME}|${EXAMPLES_DIR_NAME})/?`);
 
 const cleanPath = file => file.replace(PATH_FILTER, '');
