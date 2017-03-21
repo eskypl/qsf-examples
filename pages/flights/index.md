@@ -1,13 +1,15 @@
 # Flights QSF developer guide
 
-## Required fields
+Guide provides information how to construct basic QSF form.
+
+## <a name="required-fields"></a> Required fields 
 
 Label | Field&nbsp;name | Expected&nbsp;value | Note
 ----- | --------------- | ------------------- | ----
 Trip&nbsp;type | `ot` | `RoundTrip`&nbsp;<br/>`OneWay`<br/>`MultiCity` | Single choice field (`<select>` or `<input[type=radio]>`). It decides about form layout and relations between fields. Read more in **Trip type selection** section.
 From | `tr[0][d]` | `String` | Name or IATA code of destination (`d`) location of the first (index `0`) flight leg. Read more in **Flight legs configuration** section.
 To | `tr[0][a]` | `String` | Name or IATA code of arrival (`a`) location of the first (index Passengers leg. Read more in **Flight legs configuration** section.
-Departure | `tr[0][dd]` | `Date<YYYY-MM-DD>` | ISO format: YYYY-MM-DD.
+Departure | `tr[0][dd]` | <nobr>`Date<YYYY-MM-DD>`</nobr> | ISO format: YYYY-MM-DD.
 Adult | `pa` | `Number<1...9>` | There can be maximum 9 travelers.
 Youth | `py` | `Number<0...9>` |
 Child | `pc` | `Number<0...9>` |
@@ -53,7 +55,7 @@ There are 4 fields describing configuration of passengers. All fields should be 
 1. There can be maximum 9 passengers in total. Larger number will trigger group travel form on eSky.pl side.
 1. There can not be more infants than adult passengers.
 
-## Form submission
+## <a name="form-submission"></a> Form submission 
 
 While submitting search form, there are two important parameters that should be set. First
 on is `partner_id` parameter, which can be placed as an `<input type="hidden">` tag. Value of this attribute
@@ -81,7 +83,7 @@ Form should be submitted with using `GET` method.
 Before submitting form, it should be always validated. Sending form without proper validation
 may lead to lowered conversion rate. 
 
-## Code example
+## <a name="code-example"></a> Code example 
 
 > Code below is simplified to provide general outlook how parameters described above can be placed in HTML.
 > For more comprehensive example please look inside "example" folder.

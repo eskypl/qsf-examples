@@ -1,218 +1,283 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>QSF examples - Flights</title>
-    <meta name="theme-color" content="#031639">
-    <link href="https://static1.eskypartners.com/favicons/esky.ico" rel="shortcut icon">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" rel="stylesheet">
-    <link href="../styles/index.css" rel="stylesheet">
-</head>
-<body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>eSky | QSF examples</title><link href="https://static1.eskypartners.com/favicons/esky.ico" rel="shortcut icon"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/github.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet"><link href="http://localhost:3000/assets/styles/index.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script></head><body><nav class="nav has-shadow"><div class="container"><div class="nav-left"><a class="nav-item logo" href="http://localhost:3000/"><img src="http://localhost:3000/assets/images/logo.png"><span class="spacer">|</span>QSF examples</a><a class="nav-item is-tab" href="http://localhost:3000/">Home</a><a class="nav-item is-tab is-active" href="http://localhost:3000/flights/index.html">Flights</a><a class="nav-item is-tab" href="http://localhost:3000/faq.html">FAQ</a></div><div class="nav-right"><a class="nav-item" href="https://github.com/eskypl/qsf-examples"><img src="https://img.shields.io/github/watchers/eskypl/qsf-examples.svg?style=social&amp;label=Watch"></a></div></div></nav><div class="hero is-primary"><div class="hero-body"><div class="container"><h1 class="title">QSF examples</h1><p class="subtitle">A guide designed for website owners who became eSky.pl affiliates and want to implement eSky's QSF (Quick Search Form).
+This guide will introduce to you basic concepts required to correctly implement QSF.</p></div></div></div><section class="section"><div class="container"><div class="columns"><aside class="column is-3 menu"><p class="menu-label">Documentation</p><ul class="menu-list"><li><a href="./index.html">QSF developer guide</a></li><li><ul class="menu-list"><li><a href="./index.html#required-fields">Required fields</a></li><li><a href="./index.html#form-submission">Form submission</a></li><li><a href="./index.html#code-example">Code example</a></li></ul></li><li><a href="./advanced.html">Advanced topics</a></li><li><ul class="menu-list"><li><a href="./advanced.html#autocomplete">Autocomplete</a></li><li><a href="./advanced.html#date-pickers">Date pickers</a></li><li><a href="./advanced.html#validation">Validation</a></li></ul></li></ul><p class="menu-label">Examples</p><ul class="menu-list"><li><a href="./basic-example.html">Basic</a></li><!--li: a(href='./multi-city-example.html') Multi-city--><!--li: a(href='./locked-departure-example.html') Locked departure--></ul></aside><div class="column"><div class="content markdown"><h1>Flights QSF developer guide</h1>
+<p>Guide provides information how to construct basic QSF form.</p>
+<h2><a name="required-fields"></a> Required fields</h2>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Field name</th>
+<th>Expected value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trip type</td>
+<td><code>ot</code></td>
+<td><code>RoundTrip</code> <br/><code>OneWay</code><br/><code>MultiCity</code></td>
+<td>Single choice field (<code>&lt;select&gt;</code> or <code>&lt;input[type=radio]&gt;</code>). It decides about form layout and relations between fields. Read more in <strong>Trip type selection</strong> section.</td>
+</tr>
+<tr>
+<td>From</td>
+<td><code>tr[0][d]</code></td>
+<td><code>String</code></td>
+<td>Name or IATA code of destination (<code>d</code>) location of the first (index <code>0</code>) flight leg. Read more in <strong>Flight legs configuration</strong> section.</td>
+</tr>
+<tr>
+<td>To</td>
+<td><code>tr[0][a]</code></td>
+<td><code>String</code></td>
+<td>Name or IATA code of arrival (<code>a</code>) location of the first (index Passengers leg. Read more in <strong>Flight legs configuration</strong> section.</td>
+</tr>
+<tr>
+<td>Departure</td>
+<td><code>tr[0][dd]</code></td>
+<td><nobr><code>Date&lt;YYYY-MM-DD&gt;</code></nobr></td>
+<td>ISO format: YYYY-MM-DD.</td>
+</tr>
+<tr>
+<td>Adult</td>
+<td><code>pa</code></td>
+<td><code>Number&lt;1...9&gt;</code></td>
+<td>There can be maximum 9 travelers.</td>
+</tr>
+<tr>
+<td>Youth</td>
+<td><code>py</code></td>
+<td><code>Number&lt;0...9&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Child</td>
+<td><code>pc</code></td>
+<td><code>Number&lt;0...9&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Infant</td>
+<td><code>pi</code></td>
+<td><code>Number&lt;0...4&gt;</code></td>
+<td>Each infant needs at least one adult person, so in practice there can be no more then 4 infants.</td>
+</tr>
+<tr>
+<td>Ticket class</td>
+<td><code>sc</code></td>
+<td><code>economy</code><br/><code>economy-premium</code><br/><code>business</code><br/><code>first</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Partner ID</td>
+<td><code>partner_id</code></td>
+<td><code>String</code></td>
+<td>Hidden field with <code>PARTNER_ID</code> assigned by eSky.</td>
+</tr>
+</tbody>
+</table>
+<h3>Trip type selection</h3>
+<p>QSF can be used to search for 3 types of flight:</p>
+<ol>
+<li><strong>One way</strong>: flight from A to B.</li>
+<li><strong>Round trip</strong>: flight from A to B and then back from B(C) to A(D).</li>
+<li><strong>Multi-city</strong>: flight from A to B, then from C to D, then from E to F, etc.</li>
+</ol>
+<p>Selecting on of the above types, changes behavior of <code>tr</code> field, which is described in next section.</p>
+<blockquote>
+<p><strong>You don't have to implement all trip types.</strong> Most likely you will wont to omit <code>MultiCity</code>
+as it is most difficult to implement because of space required by it to display, and most complex
+validation rules.</p>
+</blockquote>
+<h3>Flight legs configuration</h3>
+<blockquote>
+<p><strong>What's a leg?</strong>
+We call a leg a travel route between two destinations. Flight may be composed with one or more legs. One way
+travel has one leg, where round trip has two legs. Multi-city travel can be composed from minimum 2 legs, up to 4 legs maximum.</p>
+</blockquote>
+<p>Flight legs configuration is set by <code>tr</code> field. This field has two sub-indexes given in square brackets. First index is a number of leg (counting from 0 to 3). Second index is field name. It can take 3 values:
+<code>d</code> for departure field;
+<code>a</code> for arrival field;
+<code>dd</code> for departure date field;
+Depending on chosen trip type value, following fields should be send to the eSky:</p>
+<table>
+<thead>
+<tr>
+<th><code>ot</code> value</th>
+<th><code>tr</code> fields setup</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OneWay</code></td>
+<td><code>tr[0][d]</code><br/><code>tr[0][a]</code><br/><code>tr[0][dd]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RoundTrip</code></td>
+<td><code>tr[0][d]</code><br/><code>tr[0][a]</code><br/><code>tr[0][dd]</code><br/><br/><code>tr[1][d]</code><br/><code>tr[1][a]</code><br/><code>tr[1][dd]</code></td>
+<td>Round trip consists of two legs, where <code>tr[1][d]</code> equals <code>tr[0][a]</code> and <code>tr[1][a]</code> equals <code>tr[0][d]</code>. This is just reverse trip direction of first leg, and can be calculated automatically, so for the second leg, user should be required to specify departure date only.</td>
+</tr>
+<tr>
+<td><code>MultiCity</code></td>
+<td><code>tr[0][d]</code><br/><code>tr[0][a]</code><br/><code>tr[0][dd]</code><br/><br/><code>tr[1][d]</code><br/><code>tr[1][a]</code><br/><code>tr[1][dd]</code><br/><br/><code>tr[2][d]</code><br/><code>tr[2][a]</code><br/><code>tr[2][dd]</code><br/><br/><code>tr[3][d]</code><br/><code>tr[3][a]</code><br/><code>tr[3][dd]</code></td>
+<td>All fields with index 0 and 1 are required for this trip type. Leg 2 and 3 are optional, however when added, then all fields for given leg are required. Legs have to be numbered in order, so for example there cannot be <code>tr[3]</code> without <code>tr[2]</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3>Passengers configuration</h3>
+<p>There are 4 fields describing configuration of passengers. All fields should be numbers, however their combination must match following rules:</p>
+<ol>
+<li>At least one passenger should be selected.</li>
+<li>There can be maximum 9 passengers in total. Larger number will trigger group travel form on eSky.pl side.</li>
+<li>There can not be more infants than adult passengers.</li>
+</ol>
+<h2><a name="form-submission"></a> Form submission</h2>
+<p>While submitting search form, there are two important parameters that should be set. First
+on is <code>partner_id</code> parameter, which can be placed as an <code>&lt;input type=&quot;hidden&quot;&gt;</code> tag. Value of this attribute
+will be provided by eSky.</p>
+<p>Second important parameter is set in form's <code>action</code> attribute. In this attribute you should provide
+an URL to the search results. Depending on market, you should use adequate domain for you nationality.</p>
+<table>
+<thead>
+<tr>
+<th>Country</th>
+<th><code>action</code> URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BG</td>
+<td>https://www2.esky.bg/flights/select</td>
+</tr>
+<tr>
+<td>BR</td>
+<td>https://www2.edestinos.com.br/flights/select</td>
+</tr>
+<tr>
+<td>CZ</td>
+<td>https://www2.esky.cz/flights/select</td>
+</tr>
+<tr>
+<td>HU</td>
+<td>https://www2.esky.hu/flights/select</td>
+</tr>
+<tr>
+<td>PL</td>
+<td>https://www2.esky.pl/flights/select</td>
+</tr>
+<tr>
+<td>PT</td>
+<td>https://www2.edestinos.com.pt/flights/select</td>
+</tr>
+<tr>
+<td>RO</td>
+<td>https://www2.esky.ro/flights/select</td>
+</tr>
+<tr>
+<td>SK</td>
+<td>https://www2.esky.sk/flights/select</td>
+</tr>
+<tr>
+<td>TR</td>
+<td>https://www2.esky.com.tr/flights/select</td>
+</tr>
+</tbody>
+</table>
+<p>Form should be submitted with using <code>GET</code> method.</p>
+<h3>Validation</h3>
+<p>Before submitting form, it should be always validated. Sending form without proper validation
+may lead to lowered conversion rate.</p>
+<h2><a name="code-example"></a> Code example</h2>
+<blockquote>
+<p>Code below is simplified to provide general outlook how parameters described above can be placed in HTML.
+For more comprehensive example please look inside &quot;example&quot; folder.</p>
+</blockquote>
+<pre><code class="language-html">&lt;form method=&quot;get&quot; action=&quot;https://www2.esky.pl/flights/select&quot;&gt;
+    &lt;select name=&quot;ot&quot;&gt;
+        &lt;option value=&quot;RoundTrip&quot;&gt;Round trip&lt;/option&gt;    
+        &lt;option value=&quot;OneWay&quot;&gt;One way&lt;/option&gt;    
+        &lt;option value=&quot;MultiCity&quot;&gt;Multi-city&lt;/option&gt;    
+    &lt;/select&gt;
+    
+    &lt;fieldset&gt;
+        &lt;legend&gt;Leg #1&lt;/legend&gt;
+        &lt;label&gt;From: &lt;input name=&quot;tr[0][d]&quot;/&gt;&lt;/label&gt;
+        &lt;label&gt;To: &lt;input name=&quot;tr[0][a]&quot;/&gt;&lt;/label&gt;
+        &lt;label&gt;Departure: &lt;input name=&quot;tr[0][dd]&quot; type=&quot;date&quot;/&gt;&lt;/label&gt;
+        &lt;label&gt;Return: &lt;input name=&quot;tr[1][dd]&quot; type=&quot;date&quot;/&gt;&lt;/label&gt;
+    &lt;/fieldset&gt;
+    
+    &lt;fieldset&gt;
+        &lt;legend&gt;Passengers&lt;/legend&gt;
+        &lt;label&gt;Adult:
+            &lt;select name=&quot;pa&quot;&gt;
+                &lt;option&gt;0&lt;/option&gt;
+                &lt;option selected&gt;1&lt;/option&gt;
+                &lt;option&gt;2&lt;/option&gt;
+                &lt;option&gt;3&lt;/option&gt;
+                &lt;option&gt;4&lt;/option&gt;
+                &lt;option&gt;5&lt;/option&gt;
+                &lt;option&gt;6&lt;/option&gt;
+                &lt;option&gt;7&lt;/option&gt;
+                &lt;option&gt;8&lt;/option&gt;
+                &lt;option&gt;9&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/label&gt;
+        &lt;label&gt;Youth:
+            &lt;select name=&quot;py&quot;&gt;
+                &lt;option selected&gt;0&lt;/option&gt;
+                &lt;option&gt;1&lt;/option&gt;
+                &lt;option&gt;2&lt;/option&gt;
+                &lt;option&gt;3&lt;/option&gt;
+                &lt;option&gt;4&lt;/option&gt;
+                &lt;option&gt;5&lt;/option&gt;
+                &lt;option&gt;6&lt;/option&gt;
+                &lt;option&gt;7&lt;/option&gt;
+                &lt;option&gt;8&lt;/option&gt;
+                &lt;option&gt;9&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/label&gt;         
+        &lt;label&gt;Child:
+            &lt;select name=&quot;pc&quot;&gt;
+                &lt;option selected&gt;0&lt;/option&gt;
+                &lt;option&gt;1&lt;/option&gt;
+                &lt;option&gt;2&lt;/option&gt;
+                &lt;option&gt;3&lt;/option&gt;
+                &lt;option&gt;4&lt;/option&gt;
+                &lt;option&gt;5&lt;/option&gt;
+                &lt;option&gt;6&lt;/option&gt;
+                &lt;option&gt;7&lt;/option&gt;
+                &lt;option&gt;8&lt;/option&gt;
+                &lt;option&gt;9&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/label&gt;
+        &lt;label&gt;Infant:
+            &lt;select name=&quot;pi&quot;&gt;
+                &lt;option selected&gt;0&lt;/option&gt;
+                &lt;option&gt;1&lt;/option&gt;
+                &lt;option&gt;2&lt;/option&gt;
+                &lt;option&gt;3&lt;/option&gt;
+                &lt;option&gt;4&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/label&gt;                     
+    &lt;/fieldset&gt;
+    
+    &lt;fieldset&gt;
+        &lt;legend&gt;Options&lt;/legend&gt;
+        &lt;label&gt;Ticket class:
+            &lt;select name=&quot;sc&quot;&gt;
+                &lt;option selected&gt;economy&lt;/option&gt;
+                &lt;option&gt;economy-premium&lt;/option&gt;
+                &lt;option&gt;business&lt;/option&gt;
+                &lt;option&gt;first&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/label&gt;
+    &lt;/fieldset&gt;
 
-<nav class="nav has-shadow">
-    <div class="container">
-        <div class="nav-left">
-            <a class="nav-item" href="../">
-                <strong>QSF examples</strong>
-            </a>
-            <a class="nav-item is-tab" href="../">Home</a>
-            <a class="nav-item is-tab is-active" href="./flights">Flights</a>
-        </div>
-    </div>
-</nav>
-
-<div class="hero is-primary">
-    <div class="hero-body">
-        <div class="container">
-            <h1 class="title">
-                Flights
-            </h1>
-            <h2 class="subtitle">
-                Basic example
-            </h2>
-        </div>
-    </div>
-</div>
-
-<section class="section">
-    <div class="container">
-        <div class="content">
-            <h3>Information</h3>
-            <p class="notification is-info">
-                For source code and full documentation how to assemble valid QSF for flights service, please check
-                <a href="https://github.com/eskypl/qsf-examples/blob/master/docs/flights/README.md">README.md</a> in
-                <a href="https://github.com/eskypl/qsf-examples">GitHub repository</a>.
-            </p>
-            <p>
-                This example contains only valid HTML markup with JavaScript required for interaction with <strong>Trip type</strong> controls.
-                Full implementation should always include:
-            </p>
-            <ol>
-                <li>Cities and airports auto-complete.</li>
-                <li>Date-pickers for data fields.</li>
-                <li>Full form validation.</li>
-            </ol>
-        </p>
-        <form method="get" action="https://www2.esky.pl/flights/select" id="flights-qsf" target="_blank" class="qsf container">
-            <div class="columns is-multiline is-gapless">
-                <fieldset class="column is-12 trip-type">
-                    <legend>Trip type</legend>
-                    <div class="columns">
-                        <p class="column control">
-                            <label class="radio"><input name="ot" type="radio" value="OneWay" checked>One way</label>
-                            <label class="radio"><input name="ot" type="radio" value="RoundTrip">Round trip</label>
-                            <label class="radio"><input name="ot" type="radio" value="MultiCity">Multi-city</label>
-                        </p>
-                    </div>
-                </fieldset>
-                <fieldset class="leg column is-12">
-                    <legend>Leg #1</legend>
-                    <div class="columns">
-                        <p class="column control from"><label class="label">From:</label><input class="input" name="tr[0][d]" required/></p>
-                        <p class="column control to"><label class="label">To:</label><input class="input" name="tr[0][a]" required/></p>
-                        <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[0][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
-                        <p class="column control arrival hidden"><label class="label">Return:</label><input class="input" name="tr[1][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
-                    </div>
-                </fieldset>
-                <fieldset class="leg hidden column is-12">
-                    <legend>Leg #2</legend>
-                    <div class="columns">
-                        <p class="column control from"><label class="label">From:</label><input class="input" name="tr[1][d]" required/></p>
-                        <p class="column control to"><label class="label">To:</label><input class="input" name="tr[1][a]" required/></p>
-                        <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[1][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
-                    </div>
-                </fieldset>
-                <fieldset class="leg hidden column is-12">
-                    <legend>Leg #3</legend>
-                    <div class="columns">
-                        <p class="column control from"><label class="label">From:</label><input class="input" name="tr[2][d]" required/></p>
-                        <p class="column control to"><label class="label">To:</label><input class="input" name="tr[2][a]" required/></p>
-                        <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[2][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
-                    </div>
-                </fieldset>
-                <fieldset class="leg hidden column is-12">
-                    <legend>Leg #4</legend>
-                    <div class="columns">
-                        <p class="column control from"><label class="label">From:</label><input class="input" name="tr[3][d]" required/></p>
-                        <p class="column control to"><label class="label">To:</label><input class="input" name="tr[3][a]" required/></p>
-                        <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[3][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
-                    </div>
-                </fieldset>
-                <fieldset class="column is-4">
-                    <legend>Passengers</legend>
-                    <div class="columns">
-                        <p class="column is-3 control">
-                            <label class="label">Adult:</label>
-                            <span class="select">
-                                <select class="select" name="pa">
-                                    <option>0</option>
-                                    <option selected>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                </select>
-                            </span>
-                        </p>
-                        <p class="column is-3 control">
-                            <label class="label">Youth:</label>
-                            <span class="select">
-                                <select class="select" name="py">
-                                    <option selected>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                </select>
-                            </span>
-                        </p>
-                        <p class="column is-3 control">
-                            <label class="label">Child:</label>
-                            <span class="select">
-                                <select class="select" name="pc">
-                                    <option selected>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                </select>
-                            </span>
-                        </p>
-                        <p class="column is-3 control">
-                            <label class="label">Infant:</label>
-                            <span class="select">
-                                <select class="select" name="pi">
-                                    <option selected>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </span>
-                        </p>
-                    </div>
-                </fieldset>
-                <fieldset class="column is-4">
-                    <legend>Options</legend>
-                    <div class="columns">
-                        <p class="column control">
-                            <label class="label">Ticket class:</label>
-                            <span class="select">
-                                <select name="sc">
-                                    <option value="economy" selected>economy</option>
-                                    <option value="economy-premium">economy-premium</option>
-                                    <option value="business">business</option>
-                                    <option value="first">first</option>
-                                </select>
-                            </span>
-                        </p>
-                    </div>
-                </fieldset>
-                <input type="hidden" name="partner_id" value="esky"/>
-                <p class="column is-12 control">
-                    <button class="button is-primary is-large" type="submit">Search</button>
-                </p>
-            </div>
-        </form>
-    </div>
-</section>
-
-<footer class="footer">
-    <div class="container">
-        <div class="content has-text-centered">
-            <p>
-                <strong>QSF examples</strong> by <a href="http://it.esky.pl">eSky.pl S.A.</a>. The source code is licensed
-                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
-            </p>
-            <p>
-                <a class="icon" href="https://github.com/eskypl/qsf-examples">
-                    <i class="fa fa-github"></i>
-                </a>
-            </p>
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.slim.min.js"
-        integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
-        crossorigin="anonymous"></script>
-<script src="js/flights.js"></script>
-
-</body>
-</html>
+    &lt;input type=&quot;hidden&quot; name=&quot;partner_id&quot; value=&quot;YOUR_PARTNER_ID&quot;/&gt;
+    
+    &lt;button type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+</div></div></div></div></section><footer class="footer"><div class="container"><div class="content has-text-centered"><p><strong>QSF examples</strong> by <a href="http://it.esky.pl">eSky.pl S.A.</a>.
+The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p><p><a class="icon" href="https://github.com/eskypl/qsf-examples"><i class="fa fa-github"></i></a></p></div></div></footer><script>hljs.initHighlightingOnLoad();</script></body></html>

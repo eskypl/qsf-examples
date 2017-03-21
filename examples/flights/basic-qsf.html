@@ -1,0 +1,137 @@
+<form method="get" action="https://www2.esky.pl/flights/select" id="flights-qsf" target="_blank" class="qsf container">
+    <div class="columns is-multiline is-gapless">
+        <fieldset class="column is-12 trip-type">
+            <legend>Trip type</legend>
+            <div class="columns">
+                <p class="column control">
+                    <label class="radio"><input name="ot" type="radio" value="OneWay" checked>One way</label>
+                    <label class="radio"><input name="ot" type="radio" value="RoundTrip">Round trip</label>
+                    <label class="radio"><input name="ot" type="radio" value="MultiCity">Multi-city</label>
+                </p>
+            </div>
+        </fieldset>
+        <fieldset class="leg column is-12">
+            <legend>Leg #1</legend>
+            <div class="columns">
+                <p class="column control from"><label class="label">From:</label><input class="input" name="tr[0][d]" required/></p>
+                <p class="column control to"><label class="label">To:</label><input class="input" name="tr[0][a]" required/></p>
+                <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[0][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
+                <p class="column control arrival hidden"><label class="label">Return:</label><input class="input" name="tr[1][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
+            </div>
+        </fieldset>
+        <fieldset class="leg hidden column is-12">
+            <legend>Leg #2</legend>
+            <div class="columns">
+                <p class="column control from"><label class="label">From:</label><input class="input" name="tr[1][d]" required/></p>
+                <p class="column control to"><label class="label">To:</label><input class="input" name="tr[1][a]" required/></p>
+                <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[1][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
+            </div>
+        </fieldset>
+        <fieldset class="leg hidden column is-12">
+            <legend>Leg #3</legend>
+            <div class="columns">
+                <p class="column control from"><label class="label">From:</label><input class="input" name="tr[2][d]" required/></p>
+                <p class="column control to"><label class="label">To:</label><input class="input" name="tr[2][a]" required/></p>
+                <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[2][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
+            </div>
+        </fieldset>
+        <fieldset class="leg hidden column is-12">
+            <legend>Leg #4</legend>
+            <div class="columns">
+                <p class="column control from"><label class="label">From:</label><input class="input" name="tr[3][d]" required/></p>
+                <p class="column control to"><label class="label">To:</label><input class="input" name="tr[3][a]" required/></p>
+                <p class="column control departure"><label class="label">Departure:</label><input class="input" name="tr[3][dd]" required placeholder="YYYY-MM-DD" maxlength="10" pattern="\d{4}-\d{2}-\d{2}"/></p>
+            </div>
+        </fieldset>
+        <fieldset class="column is-6">
+            <legend>Passengers</legend>
+            <div class="columns">
+                <p class="column is-3 control">
+                    <label class="label">Adult:</label>
+                    <span class="select">
+                                <select class="select" name="pa">
+                                    <option>0</option>
+                                    <option selected>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </span>
+                </p>
+                <p class="column is-3 control">
+                    <label class="label">Youth:</label>
+                    <span class="select">
+                                <select class="select" name="py">
+                                    <option selected>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </span>
+                </p>
+                <p class="column is-3 control">
+                    <label class="label">Child:</label>
+                    <span class="select">
+                                <select class="select" name="pc">
+                                    <option selected>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </span>
+                </p>
+                <p class="column is-3 control">
+                    <label class="label">Infant:</label>
+                    <span class="select">
+                                <select class="select" name="pi">
+                                    <option selected>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </span>
+                </p>
+            </div>
+        </fieldset>
+        <fieldset class="column is-4">
+            <legend>Options</legend>
+            <div class="columns">
+                <p class="column control">
+                    <label class="label">Ticket class:</label>
+                    <span class="select">
+                                <select name="sc">
+                                    <option value="economy" selected>economy</option>
+                                    <option value="economy-premium">economy-premium</option>
+                                    <option value="business">business</option>
+                                    <option value="first">first</option>
+                                </select>
+                            </span>
+                </p>
+            </div>
+        </fieldset>
+        <input type="hidden" name="partner_id" value="esky"/>
+        <p class="column is-12 control">
+            <button class="button is-primary is-large" type="submit">Search</button>
+        </p>
+    </div>
+</form>
+
+<script src="./basic-qsf.js"></script>

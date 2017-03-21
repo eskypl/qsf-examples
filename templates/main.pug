@@ -1,0 +1,64 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        title eSky | QSF examples
+        link(href='https://static1.eskypartners.com/favicons/esky.ico',rel='shortcut icon')
+        link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',rel='stylesheet')
+        link(href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/github.min.css',rel='stylesheet')
+        link(href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css',rel='stylesheet')
+        link(href=page.base + '/assets/styles/index.css',rel='stylesheet')
+
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js')
+    body
+        nav.nav.has-shadow
+            .container
+                .nav-left
+                    a.nav-item.logo(href=page.base + '/')
+                        img(src=page.base + '/assets/images/logo.png')
+                        span.spacer |
+                        .
+                            QSF examples
+                    a.nav-item.is-tab(href=page.base + '/',class=(page.dir == '.' && page.name != 'faq') ? 'is-active' : '') Home
+                    each entry in page.menu
+                        a.nav-item.is-tab(href=entry.url,class=page.dir == entry.path ? 'is-active' : '') #{entry.categoryTitle}
+                    a.nav-item.is-tab(href=page.base + '/faq.html',class=page.name == 'faq' ? 'is-active' : '') FAQ
+                .nav-right
+                    a.nav-item(href='https://github.com/eskypl/qsf-examples')
+                        img(src='https://img.shields.io/github/watchers/eskypl/qsf-examples.svg?style=social&label=Watch')
+
+
+        block hero
+            .hero.is-primary
+                .hero-body
+                    .container
+                        h1.title QSF examples
+                        p.subtitle
+                            | A guide designed for website owners who became eSky.pl affiliates and want to implement eSky's QSF (Quick Search Form).
+                            | This guide will introduce to you basic concepts required to correctly implement QSF.
+
+        section.section
+            .container
+                .columns
+                    block sidebar
+
+
+                    .column
+                        block content
+
+        footer.footer
+            .container
+                .content.has-text-centered
+                    p
+                        | <strong>QSF examples</strong> by <a href="http://it.esky.pl">eSky.pl S.A.</a>.
+                        | The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+                    p
+                        a.icon(href='https://github.com/eskypl/qsf-examples')
+                            i.fa.fa-github
+
+        script hljs.initHighlightingOnLoad();
+
+
+

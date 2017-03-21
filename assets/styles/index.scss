@@ -27,14 +27,13 @@ $info: $cyan;
 $success: $green;
 $warning: $orange;
 $danger: $red;
-$background: $gray-xxl;
 $link: $dark-blue;
 
 $family-primary: 'Noto Sans', sans-serif;
 
 @import "../../node_modules/bulma/bulma.sass";
 
-// customized
+// Customize Bulma
 fieldset {
   border: 0;
 }
@@ -48,6 +47,9 @@ a:hover {
 }
 
 footer {
+  &.footer {
+    background-color: $gray-xxl;
+  }
   * {
     color: #dcdee3;
   }
@@ -56,26 +58,48 @@ footer {
   }
 }
 
-.hero-body {
-  background-image: url('https://cdnstatic1.eskypartners.com/okazje_hero/spring2.jpg');
+code {
+  font-size: 0.9rem;
 }
 
-.title,
-.subtitle {
-  font-family: 'Ubuntu', $family-primary;
+.nav {
+  min-height: 5rem;
 }
 
 .title {
+  font-family: 'Ubuntu', $family-primary;
   font-weight: 700;
+  font-size: 2.4rem;
 }
 
 .subtitle {
   font-weight: 400;
+  font-family: $family-primary;
+  line-height: 1.5;
+}
+
+.markdown {
+  h1 { @extend .title; font-size: 2.4rem; }
+  h2 { @extend .title; font-size: 2.0rem; }
+  h3 { @extend .title; font-size: 1.6rem; }
+  h4 { @extend .title; font-size: 1.4rem; }
+  h5 { @extend .title; font-size: 1.2rem; }
+  h6 { @extend .title; font-size: 1rem; }
 }
 
 .input,
 .textarea {
   box-shadow: none;
+}
+
+// Custom classes
+.logo {
+  .spacer {
+    display: inline-block;
+    margin: 0 .5rem;
+    font-size: 1.2rem;
+    color: $blue;
+  }
 }
 
 .qsf {
@@ -87,6 +111,17 @@ footer {
   border-bottom: 1px solid $gray-m;
   margin-bottom: 1rem !important;
   padding-bottom: 1rem !important;
+}
+
+// Fix Bulma select overlapping with jQuery UI Datepicker
+.select:after {
+  z-index: 1;
+}
+
+// Adjust highlight.js font
+.hljs {
+  padding: 1.25rem 1.5rem;
+  font-size: 1rem;
 }
 
 .hidden {

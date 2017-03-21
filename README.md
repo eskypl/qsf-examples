@@ -1,5 +1,8 @@
 # QSF examples
 
+[![license](https://img.shields.io/github/license/eskypl/qsf-examples.svg)](https://raw.githubusercontent.com/eskypl/qsf-examples/master/LICENSE)
+[![GitHub watchers](https://img.shields.io/github/watchers/eskypl/qsf-examples.svg?style=social&label=Watch)](https://github.com/eskypl/qsf-examples)
+
 This guide is designed for website owners who became eSky.pl affiliates and
 want to implement eSky's QSF (Quick Search Form). This guide will introduce to you
 basic concepts required to correctly implement QSF.
@@ -70,5 +73,5 @@ You should have GIT, Node.js with npm installed on your system.
 
 &copy; 2017 eSky.pl S.A.
 
-As stated in [license](./license), eSky.pl S.A does not provide any guaranty or support
+As stated in [license](./LICENSE), eSky.pl S.A does not provide any guaranty or support
 for this repository.

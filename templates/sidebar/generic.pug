@@ -1,0 +1,4 @@
+aside.column.is-3.menu
+    ul.menu-list
+        for entry in page.pages
+            li: a(href=entry.url) #{entry.title}

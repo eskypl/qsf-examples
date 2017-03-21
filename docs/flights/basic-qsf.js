@@ -49,5 +49,22 @@ $(function () {
         }
     });
 
+    $tr.find('[name$="[a]"],[name$="[d]"]').autocomplete({
+        minLength: 3,
+        source: function (request, response) {
+            $.get('https://autocomplete.eskyservices.pl?query=' + request.term + '&locale=en_GB')
+                .then(function (data) {
+                    return data && data.result.map(function (entry) {
+                        return entry._source.suggestion;
+                    })
+                })
+                .then(response);
+        }
+    });
+
+    $tr.find('[name$="[dd]"]').datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+
     changeLayout();
 }());
