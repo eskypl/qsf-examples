@@ -78,6 +78,9 @@ TR      | https://www2.esky.com.tr/flights/select
 
 Form should be submitted with using `GET` method. 
 
+> **English language support**. Any partner can display search results in english language by using
+dedicated `action` URL: https://www2.esky.com/flights/select.
+
 ### Validation
 
 Before submitting form, it should be always validated. Sending form without proper validation
